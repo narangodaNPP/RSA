@@ -28,8 +28,10 @@ def multiplicative_inverse(e, totient_n):
 
 
 if __name__ == '__main__':
+    # generate p,q prime numbers
     p, q = generate_prime_number(1000, 5000), generate_prime_number(1000, 5000)
 
+    # select different values for p,q
     while p == q:
          q = generate_prime_number(1000, 5000)
 
@@ -37,27 +39,31 @@ if __name__ == '__main__':
     totient_n = (p - 1) * (q - 1)
 
     e = random.randint(3, totient_n-1)
+
+    # generate e that coprime with totient_n
     while gcd(e, totient_n) != 1:
         e = random.randint(3, totient_n-1)
 
     d = multiplicative_inverse(e, totient_n)
 
-    message = "Pasan Narangoda"
+    message = "Narangoda N.P.P"
 
-    encoded_message = [ord(c) for c in message]
+    encoded_message = [ord(c) for c in message]  # message encode into ascii
 
-    cipher_text = [pow(m, e, n) for m in encoded_message]
+    cipher_text = [pow(m, e, n) for m in encoded_message]  # turned into cipher text => (m^e)%n
 
-    plain_text = [pow(c, d, n) for c in cipher_text]
+    decoded_message = [pow(c, d, n) for c in cipher_text]  # cipher text decoded into ascii => (c^d)%n
 
     print(f"p = {p}")
     print(f"q = {q}")
     print(f"n = {n}")
     print(f"e = {e}")
     print(f"d = {d}")
-    print(encoded_message)
-    print(cipher_text)
-    print(plain_text)
+    print(f"Message : {message}")
+    print(f"Encoded Message = {encoded_message}")
+    print(f"Ciphertext = {cipher_text}")
+    print(f"Decrypted Message = {decoded_message}")
 
-    print(f"Decrypted Message: {''.join(chr(ch) for ch in plain_text)}")
+    # print the string value back
+    print(f"Decoded Message: {''.join(chr(ch) for ch in decoded_message)}")
 
